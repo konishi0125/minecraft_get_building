@@ -1,8 +1,18 @@
-package = []
+[[package]]
+name = "mcpi"
+version = "1.2.1"
+description = "Python library for the Minecraft Pi edition and RaspberryJuice API"
+category = "main"
+optional = false
+python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ce2aa767160f871dd3652615ba0a0dceb7733d62eb8cb4665b87f30a562e3adf"
+content-hash = "b6fab42816dff8721b237f754869205985e399c7d68349e9f9870ae677d2653e"
 
 [metadata.files]
+mcpi = [
+    {file = "mcpi-1.2.1-py3-none-any.whl", hash = "sha256:2f9cd8d40ab0935cb5a92c8aeb65f9056a9d1b05d5a20c8ce93766aa053c8356"},
+    {file = "mcpi-1.2.1.tar.gz", hash = "sha256:6fb8a80395bdbed8f18d7a3d12514f603e51bb4695f926cb1920eaf799b42526"},
+]
