@@ -13,3 +13,6 @@ mcpi = "^1.2.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+minecraft_get_building = "minecraft_get_building.get_building_data:main"
