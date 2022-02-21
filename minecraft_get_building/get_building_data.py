@@ -4,11 +4,12 @@
 
 import mcpi.minecraft as minecraft
 import csv
+import sys
 
 #mcpi init
 mc = minecraft.Minecraft.create()
 
-def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_blocks=None, ignore_blocks=None):
+def get_building_data(x, y, z, x_range, y_range, z_range, output_path=None, get_blocks=None, ignore_blocks=None):
     """
     建造物をcsvデータとして出力する
     :param x: 建造物の角 x座標の最小値
@@ -20,7 +21,7 @@ def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_block
     :param output_path: csvの出力先
     :param get_blocks: 取得するブロックの種類を限定する ブロックidのリスト
     :param ignore_blocks: 取得しないブロックの種類を指定する ブロックidのリスト
-    :return:
+    :return: out ブロックの位置と種類のリスト
     """
 
     out = [["x", "y", "z", "id", "data"]]
@@ -39,9 +40,12 @@ def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_block
                         continue
                 out.append([x_, y_, z_, block.id, block.data])
 
-    with open(output_path, "w", newline='') as f:
-        writer = csv.writer(f)
-        writer.writerows(out)
+    if output_path is not None:
+        with open(output_path, "w", newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(out)
+
+    return out
 
 
 def judge_get_block(get_blocks, target_block):
@@ -69,3 +73,9 @@ def judge_ignore_block(ignore_blocks, target_block):
             return False
     return True
 
+
+def main():
+
+
+if __name__ == "__main__":
+    main()
