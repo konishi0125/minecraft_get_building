@@ -2,13 +2,22 @@
 マイクラの建造物をcsvデータに変換する
 """
 
-import mcpi.minecraft as minecraft
+import argparse
 import csv
+import mcpi.minecraft as minecraft
 
-#mcpi init
-mc = minecraft.Minecraft.create()
 
-def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_blocks=None, ignore_blocks=None):
+def get_building_data(
+    x,
+    y,
+    z,
+    x_range,
+    y_range,
+    z_range,
+    output_path=None,
+    get_blocks=None,
+    ignore_blocks=None,
+):
     """
     建造物をcsvデータとして出力する
     :param x: 建造物の角 x座標の最小値
@@ -20,8 +29,16 @@ def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_block
     :param output_path: csvの出力先
     :param get_blocks: 取得するブロックの種類を限定する ブロックidのリスト
     :param ignore_blocks: 取得しないブロックの種類を指定する ブロックidのリスト
-    :return:
+    :return: out ブロックの位置と種類のリスト
     """
+
+    # mcpi init
+    mc = minecraft.Minecraft.create()
+
+    if get_blocks is not None:
+        get_blocks = check_and_convert_blocks_list(get_blocks)
+    if ignore_blocks is not None:
+        ignore_blocks = check_and_convert_blocks_list(ignore_blocks)
 
     out = [["x", "y", "z", "id", "data"]]
     for y_ in range(y_range):
@@ -39,9 +56,35 @@ def get_building_data(x, y, z, x_range, y_range, z_range, output_path, get_block
                         continue
                 out.append([x_, y_, z_, block.id, block.data])
 
-    with open(output_path, "w", newline='') as f:
-        writer = csv.writer(f)
-        writer.writerows(out)
+    if output_path is not None:
+        print(f"csvを出力します -> {output_path}")
+        with open(output_path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerows(out)
+
+    return out
+
+
+def check_and_convert_blocks_list(blocks_list):
+    """
+    get_blocks, ignore_blocksが適切な型かどうかの判断
+    型が間違っていればプログラム終了
+    合っていればint型に変換
+    :param blocks_list: get_blocks, ignore_blocks
+    :return: int型に変換したblock_list
+    """
+
+    int_blocks_list = []
+    for block in blocks_list:
+        if type(block) != list or len(block) != 2:
+            print("get_blocksもしくはignore_blocksが適切な型ではありません")
+            print(
+                "get_blocks,ignore_blocks -> [[id_1, data_1], [id_2, data_2], ... ,[id_n, data_n]]"
+            )
+            print("プログラムを終了します")
+            exit()
+        int_blocks_list.append([int(block[0]), int(block[1])])
+    return int_blocks_list
 
 
 def judge_get_block(get_blocks, target_block):
@@ -69,3 +112,37 @@ def judge_ignore_block(ignore_blocks, target_block):
             return False
     return True
 
+
+def main():
+    """
+    コマンドラインで動くときの関数
+    :return:
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("x", help="建物の角のx座標", type=int)
+    parser.add_argument("y", help="建物の角のy座標", type=int)
+    parser.add_argument("z", help="建物の角のz座標", type=int)
+    parser.add_argument("x_range", help="建物のx方向の大きさ", type=int)
+    parser.add_argument("y_range", help="建物のy方向の大きさ", type=int)
+    parser.add_argument("z_range", help="建物のz方向の大きさ", type=int)
+    parser.add_argument("-p", "--output_path", help="csvの出力先")
+    parser.add_argument("-g", "--get_blocks", help="取得するブロックの種類")
+    parser.add_argument("-i", "--ignore_blocks", help="取得しないブロックの種類")
+
+    args = parser.parse_args()
+
+    get_building_data(
+        args.x,
+        args.y,
+        args.z,
+        args.x_range,
+        args.y_range,
+        args.z_range,
+        output_path=args.output_path,
+        get_blocks=args.output_path,
+        ignore_blocks=args.output_path,
+    )
+
+
+if __name__ == "__main__":
+    main()
