@@ -6,6 +6,7 @@ authors = ["konishi0125"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+mcpi = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
 
