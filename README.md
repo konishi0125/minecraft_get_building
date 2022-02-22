@@ -13,7 +13,7 @@ pipコマンドでインストール
 pip install minecraft_get_building
 ```
 
-・コマンドラインから
+## コマンドラインから
 ```commandline
 minecraft_get_building x y z x_range y_range z_range --output_path --get_blocks --ignore_blocks
 ```
@@ -23,7 +23,7 @@ x_range,y_range,z_range:x,y,z方向の建造物のサイズ\
 --get_blocks:取得するブロックの指定 [[id_1, data_1], [id_2,data_2],...]\
 --ignore_blocks:取得しないブロックの指定 [[id_1, data_1], [id_2,data_2],...]
 
-・スクリプト内で使用
+## スクリプト内で使用
 ```python
 from minecraft_get_building import get_building_data
 
