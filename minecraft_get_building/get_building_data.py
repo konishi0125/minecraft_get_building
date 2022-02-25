@@ -118,6 +118,15 @@ def main():
     コマンドラインで動くときの関数
     :return:
     """
+
+    def replace_list_convert_to_int(blocks):
+        blocks = blocks[1:-1].split("[")[1:]
+        int_blocks = []
+        for block in blocks:
+            block = block.replace("]", "").split(",")
+            int_blocks.append([int(block[0]), int(block[1])])
+        return int_blocks
+
     parser = argparse.ArgumentParser()
     parser.add_argument("x", help="建物の角のx座標", type=int)
     parser.add_argument("y", help="建物の角のy座標", type=int)
@@ -130,6 +139,11 @@ def main():
     parser.add_argument("-i", "--ignore_blocks", help="取得しないブロックの種類")
 
     args = parser.parse_args()
+
+    if args.get_blocks is not None:
+        args.get_blocks = replace_list_convert_to_int(args.get_blocks)
+    if args.ignore_blocks is not None:
+        args.ignore_blocks = replace_list_convert_to_int(args.ignore_blocks)
 
     get_building_data(
         args.x,
