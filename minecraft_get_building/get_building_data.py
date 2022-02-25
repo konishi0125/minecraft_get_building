@@ -153,8 +153,8 @@ def main():
         args.y_range,
         args.z_range,
         output_path=args.output_path,
-        get_blocks=args.output_path,
-        ignore_blocks=args.output_path,
+        get_blocks=args.get_blocks,
+        ignore_blocks=args.ignore_blocks,
     )
 
 
