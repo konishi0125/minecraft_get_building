@@ -15,13 +15,14 @@ pip install minecraft_get_building
 
 ## コマンドラインから
 ```commandline
-minecraft_get_building x y z x_range y_range z_range --output_path --get_blocks --ignore_blocks
+minecraft_get_building x y z x_range y_range z_range --output_path --get_blocks --ignore_blocks --ignore_air
 ```
 x,y,z:建造物の角の座標　各値は最小値\
 x_range,y_range,z_range:x,y,z方向の建造物のサイズ\
 --output_path:csvの出力先のパス\
 --get_blocks:取得するブロックの指定 [[id_1, data_1], [id_2,data_2],...]\
 --ignore_blocks:取得しないブロックの指定 [[id_1, data_1], [id_2,data_2],...]
+--ignore_air:空気ブロックを無視するかどうか デフォルト:True
 
 ## スクリプト内で使用
 ```python
@@ -37,6 +38,7 @@ get_building_data.get_building_data(
     output_path=None,
     get_blocks=None,
     ignore_blocks=None,
+    ignore_air=True
 )
 ```
 引数はコマンドラインからと同じ
