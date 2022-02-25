@@ -17,6 +17,7 @@ def get_building_data(
     output_path=None,
     get_blocks=None,
     ignore_blocks=None,
+    ignore_air=True
 ):
     """
     建造物をcsvデータとして出力する
@@ -29,6 +30,7 @@ def get_building_data(
     :param output_path: csvの出力先
     :param get_blocks: 取得するブロックの種類を限定する ブロックidのリスト
     :param ignore_blocks: 取得しないブロックの種類を指定する ブロックidのリスト
+    :param ignore_air: 空気ブロックを無視するかどうか
     :return: out ブロックの位置と種類のリスト
     """
 
@@ -48,6 +50,8 @@ def get_building_data(
                 y_pos = y + y_
                 z_pos = z + z_
                 block = mc.getBlockWithData(x_pos, y_pos, z_pos)
+                if ignore_air is True and block.id == 0:
+                    continue
                 if get_blocks is not None:
                     if judge_get_block(get_blocks, block) is False:
                         continue
@@ -137,6 +141,7 @@ def main():
     parser.add_argument("-p", "--output_path", help="csvの出力先")
     parser.add_argument("-g", "--get_blocks", help="取得するブロックの種類")
     parser.add_argument("-i", "--ignore_blocks", help="取得しないブロックの種類")
+    parser.add_argument("-a", "--ignore_air", help="空気ブロックを無視するかどうか", default=True, type=bool)
 
     args = parser.parse_args()
 
@@ -155,6 +160,7 @@ def main():
         output_path=args.output_path,
         get_blocks=args.get_blocks,
         ignore_blocks=args.ignore_blocks,
+        ignore_air=args.ignore_air
     )
 
 
