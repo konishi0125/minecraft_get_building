@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "minecraft_get_building"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["konishi0125"]
 
